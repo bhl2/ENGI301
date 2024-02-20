@@ -55,6 +55,7 @@ Error conditions:
 # NOTE - Add import statements to allow access to Python library functions
 # NOTE - Hint:  Look at  https://docs.python.org/3/library/operator.html
 import operator
+import sys
 # ------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------
@@ -70,10 +71,15 @@ import operator
 operators = {
     # Dictionary syntax:  "key" : "value"
     #   i.e. "function" : operator.<function>
-    "+" : operator.add,
-    "-" : operator.sub,
-    "*" : operator.mul,
-    "/" : operator.truediv
+    "+"  : operator.add,
+    "-"  : operator.sub,
+    "*"  : operator.mul,
+    "/"  : operator.truediv,
+    ">>" : operator.rshift,
+    "<<" : operator.lshift,
+    "%"  : operator.mod,
+    "**" : operator.pow
+    
 }
 
 
@@ -91,16 +97,15 @@ def get_user_input():
     try:
         # NOTE - Use "pass" statements to allow code to be run without having to 
         # NOTE - fill out the contents.  This pass statement should be removed  
-        number1 = float(input("Enter first number : "))
-        number2 = float(input("Enter second number: "))
-        op      = input("Enter function (valid values are +, -, *, /): ")
-        
-        func = operators.get(op)
+        number1 = int(raw_input("Enter first number : "))
+        number2 = int(raw_input("Enter second number: "))
+        op      = raw_input("Enter function (valid values are +, -, *, /): ")
+        func = operators[op]
         
         
         # NOTE - User input is generally returned as a string and must be translated.
     except:
-        print("Invalid Input")
+        # print("Invalid Input")
         return (None, None, None)
     
     return (number1, number2, func)
@@ -123,7 +128,11 @@ def get_user_input():
 # NOTE - the the "__name__" will be the module name, i.e. the string "simple_calc"
 
 if __name__ == "__main__":
-
+    version = sys.version_info[0]
+    if version == 3:
+        def raw_input(prmpt):
+            return input(prmpt)
+            
     # NOTE - Need to add main calculator functionality:
     # NOTE -   - Use a loop construct to repeat the operation
     # NOTE -   - Get the input from the user (i.e. use function created above)    
@@ -134,9 +143,9 @@ if __name__ == "__main__":
     # NOTE - Use "pass" statements to allow code to be run without having to 
     # NOTE - fill out the contents.  This pass statement should be removed    
     
-    if (num1 == None) or (num2 == None) or (func == None):
-        print("Invalid input")
-        break
+        if (num1 == None) or (num2 == None) or (func == None):
+            print("Invalid Inputs")
+            break
     
-    print(func(num1, num2))
+        print(func(num1, num2))
 
